@@ -15,6 +15,9 @@ curl localhost:3000/_health
 curl localhost:3000/todos
 ```
 
+Pushing a `v*` tag publishes a `linux/amd64` + `linux/arm64` image to
+`ghcr.io/andeshq/subquery`.
+
 Reload the schema cache after DDL:
 
 ```sh

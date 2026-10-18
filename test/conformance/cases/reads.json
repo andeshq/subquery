@@ -1,0 +1,485 @@
+[
+  {
+    "group": "read",
+    "name": "all rows",
+    "method": "GET",
+    "path": "/films"
+  },
+  {
+    "group": "read",
+    "name": "vertical filtering",
+    "method": "GET",
+    "path": "/films?select=title,year"
+  },
+  {
+    "group": "read",
+    "name": "column alias",
+    "method": "GET",
+    "path": "/films?select=name:title"
+  },
+  {
+    "group": "read",
+    "name": "cast",
+    "method": "GET",
+    "path": "/films?select=year::text"
+  },
+  {
+    "group": "read",
+    "name": "json path text extraction",
+    "method": "GET",
+    "path": "/films?select=title,genre:meta->>genre"
+  },
+  {
+    "group": "read",
+    "name": "star plus embed",
+    "method": "GET",
+    "path": "/films?select=*,directors(last_name)"
+  },
+  {
+    "group": "read",
+    "name": "ordering",
+    "method": "GET",
+    "path": "/films?select=title&order=year.desc"
+  },
+  {
+    "group": "read",
+    "name": "ordering with nulls",
+    "method": "GET",
+    "path": "/films?select=title&order=year.desc.nullslast"
+  },
+  {
+    "group": "read",
+    "name": "limit and offset",
+    "method": "GET",
+    "path": "/films?select=title&limit=1&offset=0"
+  },
+  {
+    "group": "read",
+    "name": "HEAD",
+    "method": "HEAD",
+    "path": "/films"
+  },
+  {
+    "group": "read",
+    "name": "view",
+    "method": "GET",
+    "path": "/films_view"
+  },
+  {
+    "group": "read",
+    "name": "read from a table with an identity key",
+    "method": "GET",
+    "path": "/todos?select=id,task&order=id.asc"
+  },
+  {
+    "group": "filter",
+    "name": "equals",
+    "method": "GET",
+    "path": "/films?title=eq.Pulp%20Fiction"
+  },
+  {
+    "group": "filter",
+    "name": "not equals",
+    "method": "GET",
+    "path": "/films?title=neq.Nope"
+  },
+  {
+    "group": "filter",
+    "name": "greater than or equal",
+    "method": "GET",
+    "path": "/films?year=gte.1900"
+  },
+  {
+    "group": "filter",
+    "name": "less than",
+    "method": "GET",
+    "path": "/films?year=lt.2000"
+  },
+  {
+    "group": "filter",
+    "name": "like with star alias",
+    "method": "GET",
+    "path": "/films?title=like.*Pulp*"
+  },
+  {
+    "group": "filter",
+    "name": "ilike",
+    "method": "GET",
+    "path": "/films?title=ilike.*pulp*"
+  },
+  {
+    "group": "filter",
+    "name": "in list",
+    "method": "GET",
+    "path": "/films?id=in.(1,2,3)"
+  },
+  {
+    "group": "filter",
+    "name": "is null",
+    "method": "GET",
+    "path": "/films?rating=is.null"
+  },
+  {
+    "group": "filter",
+    "name": "not is null",
+    "method": "GET",
+    "path": "/films?rating=not.is.null"
+  },
+  {
+    "group": "filter",
+    "name": "array contains",
+    "method": "GET",
+    "path": "/films?tags=cs.%7Bcrime%7D"
+  },
+  {
+    "group": "filter",
+    "name": "json path filter",
+    "method": "GET",
+    "path": "/films?meta->>genre=eq.crime"
+  },
+  {
+    "group": "filter",
+    "name": "or group",
+    "method": "GET",
+    "path": "/films?or=(year.lt.1900,year.gt.1990)"
+  },
+  {
+    "group": "filter",
+    "name": "negated and group",
+    "method": "GET",
+    "path": "/films?not.and=(year.gte.1900,year.lte.2000)"
+  },
+  {
+    "group": "filter",
+    "name": "two conditions are ANDed",
+    "method": "GET",
+    "path": "/films?year=gte.1900&title=eq.Pulp%20Fiction"
+  },
+  {
+    "group": "filter",
+    "name": "full text search on text",
+    "method": "GET",
+    "path": "/films?title=fts(english).fiction"
+  },
+  {
+    "group": "filter",
+    "name": "plain text search",
+    "method": "GET",
+    "path": "/films?title=plfts.pulp%20fiction"
+  },
+  {
+    "group": "embed",
+    "name": "many-to-one",
+    "method": "GET",
+    "path": "/films?select=title,directors(last_name)"
+  },
+  {
+    "group": "embed",
+    "name": "one-to-many",
+    "method": "GET",
+    "path": "/films?select=title,roles(character)"
+  },
+  {
+    "group": "embed",
+    "name": "many-to-many",
+    "method": "GET",
+    "path": "/films?select=title,actors(first_name,last_name)"
+  },
+  {
+    "group": "embed",
+    "name": "one-to-one",
+    "method": "GET",
+    "path": "/films?select=title,technical_specs(camera)"
+  },
+  {
+    "group": "embed",
+    "name": "alias",
+    "method": "GET",
+    "path": "/films?select=title,director:directors(last_name)"
+  },
+  {
+    "group": "embed",
+    "name": "inner join",
+    "method": "GET",
+    "path": "/films?select=title,actors!inner(first_name)&actors.first_name=eq.John"
+  },
+  {
+    "group": "embed",
+    "name": "embedded filter",
+    "method": "GET",
+    "path": "/films?select=title,roles(character)&roles.character=eq.Vincent%20Vega"
+  },
+  {
+    "group": "embed",
+    "name": "embedded order and limit",
+    "method": "GET",
+    "path": "/films?select=title,roles(character)&roles.order=character.desc&roles.limit=1"
+  },
+  {
+    "group": "embed",
+    "name": "nested embed",
+    "method": "GET",
+    "path": "/films?select=title,roles(character,actors(first_name))"
+  },
+  {
+    "group": "embed",
+    "name": "spread to one",
+    "method": "GET",
+    "path": "/films?select=title,...directors(last_name)"
+  },
+  {
+    "group": "embed",
+    "name": "anti join",
+    "method": "GET",
+    "path": "/films?select=title,technical_specs(*)&technical_specs=is.null"
+  },
+  {
+    "group": "embed",
+    "name": "self join from the other side",
+    "method": "GET",
+    "path": "/directors?select=last_name,films(title)"
+  },
+  {
+    "group": "prefer",
+    "name": "exact count",
+    "method": "GET",
+    "path": "/todos?limit=1",
+    "headers": {
+      "Prefer": "count=exact"
+    }
+  },
+  {
+    "group": "prefer",
+    "name": "return representation on read",
+    "method": "GET",
+    "path": "/todos?select=id",
+    "headers": {
+      "Prefer": "return=representation"
+    }
+  },
+  {
+    "group": "prefer",
+    "name": "range header",
+    "method": "GET",
+    "path": "/todos?order=id.asc",
+    "headers": {
+      "Range": "0-0"
+    }
+  },
+  {
+    "group": "prefer",
+    "name": "range unit",
+    "method": "GET",
+    "path": "/todos?order=id.asc",
+    "headers": {
+      "Range": "0-0",
+      "Range-Unit": "items"
+    }
+  },
+  {
+    "group": "meta",
+    "name": "OPTIONS on a table",
+    "method": "OPTIONS",
+    "path": "/films"
+  },
+  {
+    "group": "meta",
+    "name": "OPTIONS on a view",
+    "method": "OPTIONS",
+    "path": "/films_view"
+  },
+  {
+    "group": "meta",
+    "name": "OPTIONS on rpc",
+    "method": "OPTIONS",
+    "path": "/rpc/add_them"
+  },
+  {
+    "group": "meta",
+    "name": "OPTIONS on a volatile function",
+    "method": "OPTIONS",
+    "path": "/rpc/bump_notes"
+  },
+  {
+    "group": "singular",
+    "name": "object media type, one row",
+    "method": "GET",
+    "path": "/films?select=id,title",
+    "headers": { "Accept": "application/vnd.pgrst.object+json" }
+  },
+  {
+    "group": "singular",
+    "name": "object media type, no rows",
+    "method": "GET",
+    "path": "/films?id=eq.999",
+    "headers": { "Accept": "application/vnd.pgrst.object+json" }
+  },
+  {
+    "group": "singular",
+    "name": "object media type, multiple rows",
+    "method": "GET",
+    "path": "/todos",
+    "headers": { "Accept": "application/vnd.pgrst.object+json" }
+  },
+  {
+    "group": "singular",
+    "name": "object media type, rpc one row",
+    "method": "POST",
+    "path": "/rpc/film_titles",
+    "headers": { "Accept": "application/vnd.pgrst.object+json" }
+  },
+  {
+    "group": "rpc",
+    "name": "scalar via GET",
+    "method": "GET",
+    "path": "/rpc/add_them?a=1&b=2"
+  },
+  {
+    "group": "rpc",
+    "name": "scalar via POST",
+    "method": "POST",
+    "path": "/rpc/add_them",
+    "body": "{\"a\":10,\"b\":32}"
+  },
+  {
+    "group": "rpc",
+    "name": "defaulted argument",
+    "method": "GET",
+    "path": "/rpc/greet_user"
+  },
+  {
+    "group": "rpc",
+    "name": "single unnamed json argument",
+    "method": "POST",
+    "path": "/rpc/mult_them",
+    "body": "{\"x\":4,\"y\":2}"
+  },
+  {
+    "group": "rpc",
+    "name": "variadic via POST",
+    "method": "POST",
+    "path": "/rpc/plus_one",
+    "body": "{\"v\":[1,2,3]}"
+  },
+  {
+    "group": "rpc",
+    "name": "table-valued with projection",
+    "method": "GET",
+    "path": "/rpc/best_films?select=title,year"
+  },
+  {
+    "group": "rpc",
+    "name": "table-valued with filter",
+    "method": "GET",
+    "path": "/rpc/best_films?title=eq.Pulp%20Fiction"
+  },
+  {
+    "group": "rpc",
+    "name": "returns table",
+    "method": "GET",
+    "path": "/rpc/film_titles?select=title&order=year.desc",
+    "known_divergence": "Subquery filters and orders RETURNS TABLE(...) results by their declared columns; PostgREST treats them as an untyped record and returns 42703."
+  },
+  {
+    "group": "rpc",
+    "name": "table-valued with embed",
+    "method": "GET",
+    "path": "/rpc/best_films?select=title,directors(last_name)"
+  },
+  {
+    "group": "rpc",
+    "name": "volatile function rejects GET",
+    "method": "GET",
+    "path": "/rpc/bump_notes?n=1"
+  },
+  {
+    "group": "error",
+    "name": "unknown table",
+    "method": "GET",
+    "path": "/does_not_exist"
+  },
+  {
+    "group": "error",
+    "name": "unknown column in filter",
+    "method": "GET",
+    "path": "/films?nope=eq.1"
+  },
+  {
+    "group": "error",
+    "name": "unknown operator",
+    "method": "GET",
+    "path": "/films?year=bogus.1"
+  },
+  {
+    "group": "error",
+    "name": "unknown embedded relation",
+    "method": "GET",
+    "path": "/films?select=title,unicorns(name)"
+  },
+  {
+    "group": "error",
+    "name": "unknown function",
+    "method": "POST",
+    "path": "/rpc/does_not_exist",
+    "body": "{}"
+  },
+  {
+    "group": "csv",
+    "name": "csv output",
+    "method": "GET",
+    "path": "/films",
+    "headers": { "Accept": "text/csv" }
+  },
+  {
+    "group": "csv",
+    "name": "csv aliases and casts",
+    "method": "GET",
+    "path": "/films?select=id,title,yr:year,big:id::int8",
+    "headers": { "Accept": "text/csv" }
+  },
+  {
+    "group": "csv",
+    "name": "csv empty result",
+    "method": "GET",
+    "path": "/todos?id=eq.999&select=id",
+    "headers": { "Accept": "text/csv" }
+  },
+  {
+    "group": "csv",
+    "name": "csv with count",
+    "method": "GET",
+    "path": "/todos?select=id&limit=1",
+    "headers": { "Accept": "text/csv", "Prefer": "count=exact" }
+  },
+  {
+    "group": "csv",
+    "name": "csv complex selection",
+    "method": "GET",
+    "path": "/films?select=id,directors(last_name)",
+    "headers": { "Accept": "text/csv" },
+    "known_divergence": "CSV output is limited to plain columns, aliases, and casts; Subquery reports 406 (PGRST107) where PostgREST renders the embed as a JSON field."
+  },
+  {
+    "group": "error",
+    "name": "bad range",
+    "method": "GET",
+    "path": "/films",
+    "headers": {
+      "Range": "not-a-range"
+    }
+  },
+  {
+    "group": "error",
+    "name": "not null violation",
+    "method": "POST",
+    "path": "/products",
+    "body": "{}"
+  },
+  {
+    "group": "error",
+    "name": "empty body",
+    "method": "POST",
+    "path": "/products",
+    "body": ""
+  }
+]

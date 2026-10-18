@@ -1,0 +1,37 @@
+# Subquery example configuration.
+# Values shown are the built-in defaults unless noted. Environment variables
+# with the PGRST_ prefix override these values.
+
+db-uri = "postgres://authenticator:secret@localhost:5432/app"
+db-schemas = "public"
+db-anon-role = "anon"
+
+# jwt-secret accepts a plain HMAC passphrase (32+ chars), a base64 secret
+# (with jwt-secret-is-base64 = true), "@path/to/jwks.json" or
+# "@path/to/secret", a literal JWK/JWKS, or an http(s) JWKS URL. A URL is
+# fetched and cached; unknown kid values trigger one refresh.
+# jwt-secret = "https://issuer.example/.well-known/jwks.json"
+# jwt-aud = "subquery"
+# jwt-role-claim-key = "$.role"
+
+server-host = "!4"
+server-port = 3000
+
+db-pool = 10
+db-max-rows = 0
+# Bounds one request's transaction, including its statement. 0 disables it.
+db-request-timeout = 30
+db-extra-search-path = "public"
+db-prepared-statements = true
+db-tx-end = "commit"
+db-channel = "pgrst"
+db-channel-enabled = true
+
+log-level = "error"
+# server-trace-header = "X-Request-Id"
+# Log the SQL each request runs (placeholders only, never bound values). The
+# query is logged at info, so it also needs log-level info or lower.
+# log-query = true
+client-error-verbosity = "verbose"
+openapi-mode = "follow-privileges"
+# openapi-server-proxy-uri = "https://api.example.com/v1"

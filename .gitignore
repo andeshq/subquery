@@ -1,0 +1,18 @@
+# Build output
+/subquery
+/dist/
+*.test
+*.out
+
+# Local configuration, which may hold a real jwt-secret. The committed examples
+# are subquery.conf.example and examples/sql-only/subquery.conf.
+/subquery.conf
+.env
+
+# OS
+.DS_Store
+
+# Editors
+.idea/
+.vscode/
+*.swp

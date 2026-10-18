@@ -1,0 +1,184 @@
+[
+  {
+    "group": "write",
+    "name": "insert minimal",
+    "method": "POST",
+    "path": "/notes",
+    "body": "{\"title\":\"conf-minimal\"}"
+  },
+  {
+    "group": "write",
+    "name": "insert representation",
+    "method": "POST",
+    "path": "/notes",
+    "body": "{\"title\":\"conf-shown\",\"body\":\"b\"}",
+    "headers": {
+      "Prefer": "return=representation"
+    }
+  },
+  {
+    "group": "write",
+    "name": "bulk insert",
+    "method": "POST",
+    "path": "/notes",
+    "body": "[{\"title\":\"conf-bulk-1\"},{\"title\":\"conf-bulk-2\"}]",
+    "headers": {
+      "Prefer": "return=representation"
+    }
+  },
+  {
+    "group": "write",
+    "name": "heterogeneous array rejected",
+    "method": "POST",
+    "path": "/todos",
+    "body": "[{\"task\":\"conf-a\"},{\"task\":\"conf-b\",\"done\":true}]"
+  },
+  {
+    "group": "write",
+    "name": "insert headers-only",
+    "method": "POST",
+    "path": "/notes",
+    "body": "{\"title\":\"conf-located\"}",
+    "headers": {
+      "Prefer": "return=headers-only"
+    }
+  },
+  {
+    "group": "write",
+    "name": "insert missing default",
+    "method": "POST",
+    "path": "/notes",
+    "body": "{\"title\":\"conf-defaulted\"}",
+    "headers": {
+      "Prefer": "missing=default, return=representation"
+    }
+  },
+  {
+    "group": "write",
+    "name": "insert with columns",
+    "method": "POST",
+    "path": "/notes?columns=title",
+    "body": "{\"title\":\"conf-columns\",\"body\":\"ignored\"}",
+    "headers": {
+      "Prefer": "return=representation"
+    }
+  },
+  {
+    "group": "write",
+    "name": "update minimal",
+    "method": "PATCH",
+    "path": "/notes?title=eq.conf-minimal",
+    "body": "{\"body\":\"patched\"}"
+  },
+  {
+    "group": "write",
+    "name": "update representation",
+    "method": "PATCH",
+    "path": "/notes?title=eq.conf-minimal",
+    "body": "{\"body\":\"patched-again\"}",
+    "headers": {
+      "Prefer": "return=representation"
+    }
+  },
+  {
+    "group": "write",
+    "name": "delete",
+    "method": "DELETE",
+    "path": "/notes?title=eq.conf-minimal"
+  },
+  {
+    "group": "write",
+    "name": "delete representation",
+    "method": "DELETE",
+    "path": "/notes?title=eq.conf-defaulted",
+    "headers": {
+      "Prefer": "return=representation"
+    }
+  },
+  {
+    "group": "write",
+    "name": "upsert merge",
+    "method": "POST",
+    "path": "/products",
+    "body": "{\"sku\":\"CONF-1\",\"name\":\"first\",\"price\":1}",
+    "headers": {
+      "Prefer": "resolution=merge-duplicates, return=representation"
+    }
+  },
+  {
+    "group": "write",
+    "name": "upsert merge again",
+    "method": "POST",
+    "path": "/products",
+    "body": "{\"sku\":\"CONF-1\",\"name\":\"second\",\"price\":2}",
+    "headers": {
+      "Prefer": "resolution=merge-duplicates, return=representation"
+    }
+  },
+  {
+    "group": "write",
+    "name": "upsert ignore",
+    "method": "POST",
+    "path": "/products",
+    "body": "{\"sku\":\"CONF-1\",\"name\":\"ignored\",\"price\":9}",
+    "headers": {
+      "Prefer": "resolution=ignore-duplicates, return=representation"
+    }
+  },
+  {
+    "group": "write",
+    "name": "put inserts",
+    "method": "PUT",
+    "path": "/products?sku=eq.CONF-PUT",
+    "body": "{\"sku\":\"CONF-PUT\",\"name\":\"created\",\"price\":5}"
+  },
+  {
+    "group": "write",
+    "name": "put replaces",
+    "method": "PUT",
+    "path": "/products?sku=eq.CONF-PUT",
+    "body": "{\"sku\":\"CONF-PUT\",\"name\":\"replaced\",\"price\":6}"
+  },
+  {
+    "group": "write",
+    "name": "patch cannot change a different key",
+    "method": "PUT",
+    "path": "/products?sku=eq.CONF-PUT",
+    "body": "{\"sku\":\"CONF-OTHER\",\"name\":\"n\",\"price\":1}"
+  },
+  {
+    "group": "write",
+    "name": "row level security denies insert",
+    "method": "POST",
+    "path": "/secrets",
+    "body": "{\"owner\":\"user_123\",\"payload\":\"forged\"}"
+  },
+  {
+    "group": "write",
+    "name": "tx rollback is ignored by default (db-tx-end is commit)",
+    "method": "POST",
+    "path": "/notes",
+    "body": "{\"title\":\"conf-rolled-back\"}",
+    "headers": {
+      "Prefer": "tx=rollback, return=representation"
+    }
+  },
+  {
+    "group": "write",
+    "name": "row persisted despite tx=rollback",
+    "method": "GET",
+    "path": "/notes?title=eq.conf-rolled-back"
+  },
+  {
+    "group": "write",
+    "name": "cleanup products",
+    "method": "DELETE",
+    "path": "/products?sku=in.(CONF-1,CONF-PUT)"
+  },
+  {
+    "group": "write",
+    "name": "cleanup notes",
+    "method": "DELETE",
+    "path": "/notes?title=like.conf-*"
+  }
+]

@@ -1,0 +1,5 @@
+# Keep the build context to what the image actually compiles.
+.git
+.github
+test
+examples
